@@ -8,7 +8,7 @@ import Login from "./Login";
 
 function App() {
   return (
-    <div class="container">
+    <div className="container">
       <Header />
 
       <main>

@@ -2,24 +2,39 @@ import React from "react";
 import Input from "./formFields/Input";
 
 const Login = () => {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
   return (
     <div
-      class="d-flex flex-column justify-content-center "
+      className="d-flex flex-column justify-content-center "
       style={{ alignItems: "center", justifyContent: "center" }}
     >
       {/* Campo email */}
-      <div class="col-4 ">
-        <Input id="email" type="email" label="Email" />
+      <div className="col-4 ">
+        <Input
+          id="email"
+          type="email"
+          label="Email"
+          value={email}
+          setValue={(event) => setEmail(event.target.value)}
+        />
       </div>
 
       {/* Campo Senha */}
-      <div class="col-4">
-        <Input id="senha" type="password" label="Senha" />
+      <div className="col-4">
+        <Input
+          id="senha"
+          type="password"
+          label="Senha"
+          value={password}
+          setValue={(event) => setPassword(event.target.value)}
+        />
       </div>
 
       {/* button submit */}
-      <div class="col-lg-2 col-1 ">
-        <button type="button" class="btn btn-primary">
+      <div className="col-4 text-center">
+        <button type="button" className="btn btn-primary">
           Logar
         </button>
       </div>

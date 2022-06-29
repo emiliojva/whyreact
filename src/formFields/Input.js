@@ -2,15 +2,17 @@ import React from "react";
 
 const Input = (props) => {
   return (
-    <div class="mb-3">
-      <label for={props.id} class="form-label">
-        {props.label}
+    <div className="mb-3">
+      <label htmlFor={props.id} className="form-label">
+        {props.label} {props.value && " - " + props.value}
       </label>
       <input
-        type={props.type}
-        class="form-control"
         id={props.id}
+        type={props.type}
+        className="form-control"
         placeholder={props.placeholder ?? ""}
+        value={props.value}
+        onChange={props.setValue}
       />
     </div>
   );

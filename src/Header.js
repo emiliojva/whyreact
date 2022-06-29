@@ -3,10 +3,10 @@ import React from "react";
 const Header = () => {
   return (
     <div>
-      <ul class="nav justify-content-center">
-        <li class="nav-item">
+      <ul className="nav justify-content-center">
+        <li className="nav-item">
           <a
-            class="nav-link active"
+            className="nav-link active"
             aria-current="page"
             href="http://google.com.br/?q=reactjs"
           >
@@ -14,14 +14,14 @@ const Header = () => {
           </a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link" href="http://google.com.br/?q=reactjs">
+        <li className="nav-item">
+          <a className="nav-link" href="http://google.com.br/?q=reactjs">
             Sobre
           </a>
         </li>
 
-        <li class="nav-item d-none">
-          <a class="nav-link" href="http://google.com.br/?q=reactjs">
+        <li className="nav-item d-none">
+          <a className="nav-link" href="http://google.com.br/?q=reactjs">
             Conta
           </a>
         </li>

@@ -2,22 +2,28 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div class="container">
+    <div className="container">
       <hr />
-      <footer class="py-3 my-4">
-        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-          <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">
+      <footer className="py-3 my-4">
+        <ul className="nav justify-content-center border-bottom pb-3 mb-3">
+          <li className="nav-item">
+            <a
+              href="http://google.com.br/?q=reactjs"
+              className="nav-link px-2 text-muted"
+            >
               FAQs
             </a>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link px-2 text-muted">
+          <li className="nav-item">
+            <a
+              href="http://google.com.br/?q=reactjs"
+              className="nav-link px-2 text-muted"
+            >
               About
             </a>
           </li>
         </ul>
-        <p class="text-center text-muted">UERJ</p>
+        <p className="text-center text-muted">UERJ</p>
       </footer>
     </div>
   );
