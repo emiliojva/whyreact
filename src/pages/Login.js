@@ -1,69 +1,53 @@
 import React from "react";
-import Input from "./formFields/Input";
-import Loading from "./Loading";
+import Input from "../formFields/Input";
+import Loading from "../Loading";
+import { AUTH_LOGIN } from "../ApiService";
 
 const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [responseApi, setResponseApi] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState(false);
 
-  const handleSubmit = (event) => {
+  /**
+   * uso da palavra reservada async (ES6)
+   * Para utilizar alguma função async(await for something)
+   * precisamos que a função invocadora possua a palavra reservada async na frente.
+   * Caso isso nao seja feito, handleSubmit nao vai aguardar o desfecho de AUTH_LOGIN
+   */
+  const handleSubmit = async (event) => {
     event.preventDefault(); // O comportamento padrão do Formulário é o envio e reload da pagina. Anularemos esse comportamento
 
-    setLoading(true);
-    setResponseApi("");
-
-    const dados = { login: email }; // quando colocamos um valor dentro de um objeto literal {}, ele automaticamente replica o nome para propriedade
+    setLoading(true); // Estado de loading acionado para tentar logar
+    setResponseApi(""); // limpar estado de resposta toda fez re-renderizar
 
     /**
-     * Funcoes sincronas. Empilhamento execuções. Espera cada linha terminar. Assim como o linguagens de servidor.
+     * Força uma tentativa e erro ao acessar uma api externa
      */
-    const auth = async () => {
+    let json_response;
+    try {
+      const { json, response } = await AUTH_LOGIN(email, password);
+      if (response.ok === false) setError(response.message);
+      json_response = json;
+    } catch (err) {
+      console.log("erro: " + err); // Failed to fetch
+      json_response = err;
+      setError(true);
+    } finally {
       /**
-       * Configuro dados da url e opções para tentar login em api externa
-       * POST
-       * Dados com JSON
-       * Bearer no Authorization
+       * Fazer um suspense para testar o estado loading. Pois a requisição é muito rápida.
        */
-      const urlLogin =
-        "http://www.inovuerj.sr2.uerj.br/desenvolvimento/secti/api/v1/auth/login";
-      const options = {
-        method: "POST",
-        body: JSON.stringify(dados),
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: "Bearer " + password, // Convenção W3C que diz ao navegador para descartar a informação após submit
-        },
-      };
-
-      /**
-       * Força uma tentativa e erro ao acessar uma api externa
-       */
-      let json;
-      try {
-        const response = await fetch(urlLogin, options);
-        json = await response.json();
-      } catch (err) {
-        console.log("erro: " + err); // Failed to fetch
-        json = err;
-      } finally {
-        /**
-         * Fazer um suspense para testar o estado loading. Pois a requisição é muito rápida.
-         */
-        setTimeout(() => {
-          console.log(json);
-          setLoading(false); // desativo o estado de loading
-          setResponseApi(json);
-        }, 1500);
-      }
-    };
-
-    /**
-     * Executa função async dentro do handleSubmit()
-     */
-    auth();
+      setTimeout(() => {
+        console.log(json_response);
+        setLoading(false); // desativo o estado de loading
+        setResponseApi(json_response); // capturamos o json retornado para resposta
+        window.localStorage.setItem(
+          "#TOKEN",
+          json_response.jwt
+        ); /* Armazenar Token do Usuario */
+      }, 1500);
+    }
   };
 
   return (

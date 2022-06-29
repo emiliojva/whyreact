@@ -8,18 +8,15 @@ const Footer = () => {
         <ul className="nav justify-content-center border-bottom pb-3 mb-3">
           <li className="nav-item">
             <a
-              href="http://google.com.br/?q=reactjs"
+              href="https://github.com/emiliojva/whyreact"
               className="nav-link px-2 text-muted"
             >
               FAQs
             </a>
           </li>
           <li className="nav-item">
-            <a
-              href="http://google.com.br/?q=reactjs"
-              className="nav-link px-2 text-muted"
-            >
-              About
+            <a href="http://www.uerj.br" className="nav-link px-2 text-muted">
+              UERJ
             </a>
           </li>
         </ul>
