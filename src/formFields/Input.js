@@ -1,9 +1,19 @@
-import React from 'react'
+import React from "react";
 
-const Input = () => {
+const Input = (props) => {
   return (
-    <div><input type="text" /></div>
-  )
-}
+    <div class="mb-3">
+      <label for={props.id} class="form-label">
+        {props.label}
+      </label>
+      <input
+        type={props.type}
+        class="form-control"
+        id={props.id}
+        placeholder={props.placeholder ?? ""}
+      />
+    </div>
+  );
+};
 
-export default Input
+export default Input;
