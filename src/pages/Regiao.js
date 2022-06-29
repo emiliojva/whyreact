@@ -1,6 +1,44 @@
 import React from "react";
+import { useNavigate } from "react-router";
+import { AUTH_TOKEN_VALIDADE } from "../ApiService";
 
 const Regiao = () => {
+  const navigate = useNavigate(); // retorna uma função para navegar pelas rotas nomeadas em app
+
+  /**
+   * Hook Effect - Lida com Efeitos colateres
+   *
+   * Para React, tudo que fugir o fluxo de renderização normal (request, fetch, animações),
+   * é considerado um efeito colateral.
+   * O que significa que pode geral loop infinito na aplicação.
+   * Fazendo ela renderizar pra sempre.
+   * SEMPRE QUE MUDAMOS UM ESTADO, A APLICAÇÃO FAZ RELOAD NA RENDERIZAÇÃO DAS FUNÇÕES DE UM COMPONENTE REACT. NAO QUEREMOS ISSO AQU!
+   * -
+   * O Hook useEffect ser para nesse momento para dizer, só realize a chamada uma vez da função AUTH_TOKEN_VALIDADE
+   */
+  React.useEffect(() => {
+    console.log("effect Regiao ...");
+    /**
+     * Precisamos criar essa função, pois nosso função AUTH_TOKEN_VALIDADE é async
+     */
+    const validarToken = async () => {
+      const token = window.localStorage.getItem("#TOKEN");
+      const { response, json } = await AUTH_TOKEN_VALIDADE(token);
+
+      if (response.ok === false) {
+        if (json.user === undefined) {
+          console.log(response);
+          navigate("/login"); // envio o usuario para página de login
+        }
+      }
+    };
+
+    /**
+     * Chamando validacao do token
+     */
+    validarToken();
+  });
+
   return (
     <div className="container">
       <h3>Regiões</h3>

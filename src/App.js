@@ -1,5 +1,6 @@
 /* Pages */
 import Header from "./pages/Header";
+import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Sobre from "./pages/Sobre";
 import Regiao from "./pages/Regiao";
@@ -26,7 +27,8 @@ function App() {
         <main>
           {/* Unico local que tem conteudo alterado(render content) */}
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<Home />} />
+            <Route path="login" element={<Login />} />
             <Route path="regiao" element={<Regiao />} />
             <Route path="sobre" element={<Sobre />} />
           </Routes>

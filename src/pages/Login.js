@@ -2,6 +2,7 @@ import React from "react";
 import Input from "../formFields/Input";
 import Loading from "../Loading";
 import { AUTH_LOGIN } from "../ApiService";
+import { Navigate, useNavigate } from "react-router";
 
 const Login = () => {
   const [email, setEmail] = React.useState("");
@@ -9,6 +10,8 @@ const Login = () => {
   const [responseApi, setResponseApi] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
+
+  const navigate = useNavigate(); // retorna uma função para navegar pelas rotas nomeadas em app
 
   /**
    * uso da palavra reservada async (ES6)
@@ -47,6 +50,13 @@ const Login = () => {
           json_response.jwt
         ); /* Armazenar Token do Usuario */
       }, 1500);
+
+      /**
+       * Mas um suspense :?) para ir para página com lista de regiões. Após 3 segundos
+       */
+      setTimeout(() => {
+        navigate("/regiao");
+      }, 3000);
     }
   };
 
