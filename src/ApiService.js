@@ -57,3 +57,32 @@ export const AUTH_TOKEN_VALIDADE = async (token) => {
 
   return { json, response };
 };
+
+/**
+ * Validar Token
+ */
+export const GET_REGIOES = async (token) => {
+  /**
+   * Configuro dados da url e opções para tentar validar o token em api externa
+   * POST
+   
+   * Bearer no Authorization
+   */
+  const urlLogin =
+    "http://www.inovuerj.sr2.uerj.br/desenvolvimento/secti/api/v1/regioes";
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: "Bearer " + token, // Convenção W3C que diz ao navegador para descartar a informação após submit
+    },
+  };
+
+  const response = await fetch(urlLogin, options);
+  // console.log(response);
+  const json = await response.json();
+  // console.log(json);
+
+  return { response, json };
+};

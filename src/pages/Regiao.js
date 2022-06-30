@@ -1,8 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router";
-import { AUTH_TOKEN_VALIDADE } from "../ApiService";
+import { Link } from "react-router-dom";
+import { AUTH_TOKEN_VALIDADE, GET_REGIOES } from "../ApiService";
+import CirculoAtivo from "../components/CirculoAtivo";
+import Loading from "../Loading";
 
 const Regiao = () => {
+  const [listRegioes, setListRegioes] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
   const navigate = useNavigate(); // retorna uma função para navegar pelas rotas nomeadas em app
 
   /**
@@ -30,14 +35,20 @@ const Regiao = () => {
           console.log(response);
           navigate("/login"); // envio o usuario para página de login
         }
+      } else {
+        const { response, json } = await GET_REGIOES(token);
+        setListRegioes(json);
       }
+      setLoading(false);
     };
 
     /**
      * Chamando validacao do token
      */
     validarToken();
-  });
+  }, [navigate]);
+
+  if (loading) return <Loading active={loading} />; // Nosso loading component interagindo com o estado loading da Pagina de Login
 
   return (
     <div className="container">
@@ -54,41 +65,22 @@ const Regiao = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Região Metropolitana</td>
-            <td align="center">
-              {1 ? (
-                <div
-                  style={{
-                    border: "1px solid green",
-                    borderRadius: "30px",
-                    height: "1rem",
-                    width: "1rem",
-                    background: "green",
-                    textAlign: "center",
-                    margin: "0px auto",
-                  }}
-                ></div>
-              ) : (
-                "DESATIVADA"
-              )}
-            </td>
-            <td>2019-07-22 18:35:07</td>
-          </tr>
-
-          {/* Exemplos do Bootstrap  */}
-          {/* <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td colSpan="2">Larry the Bird</td>
-            <td>@twitter</td>
-          </tr> */}
+          {listRegioes &&
+            listRegioes.map((regiaoObject) => (
+              <tr key={regiaoObject.id}>
+                <th scope="row">{regiaoObject.id}</th>
+                <td>
+                  <Link to={"municipiosPorRegiao/" + regiaoObject.id}>
+                    {regiaoObject.nome}
+                  </Link>
+                </td>
+                <td align="center">
+                  <CirculoAtivo active={Number(regiaoObject.ativo)} />{" "}
+                  {/* Transformamos em Number. Json Tranzendo string */}
+                </td>
+                <td>{regiaoObject.data_criacao}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>
