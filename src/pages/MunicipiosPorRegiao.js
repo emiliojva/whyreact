@@ -49,7 +49,9 @@ const MunicipiosPorRegiao = () => {
 
   return (
     <div className="container">
-      <h3>Municipios da Região: {params.regiao_nome} </h3>
+      <h3>
+        Municipios da <strong>{params.regiao_nome}</strong>
+      </h3>
       <table className="table">
         <thead>
           <tr>
@@ -67,9 +69,9 @@ const MunicipiosPorRegiao = () => {
               <tr key={regiaoObject.id}>
                 <th scope="row">{regiaoObject.id}</th>
                 <td>
-                  <Link to={"municipiosPorRegiao/" + regiaoObject.id}>
-                    {regiaoObject.nome}
-                  </Link>
+                  {/* <Link to={"municipiosPorRegiao/" + regiaoObject.id}> */}
+                  {regiaoObject.nome}
+                  {/* </Link> */}
                 </td>
                 <td align="center">
                   <CirculoAtivo active={Number(regiaoObject.ativo)} />{" "}
