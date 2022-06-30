@@ -12,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 /* React  */
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import MunicipiosPorRegiao from "./pages/MunicipiosPorRegiao";
 
 /**
  * Component App - Principal
@@ -30,6 +31,10 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="login" element={<Login />} />
             <Route path="regiao" element={<Regiao />} />
+            <Route
+              path="municipiosPorRegiao/:regiao_id/:regiao_nome" /* Passando parametros para rotas */
+              element={<MunicipiosPorRegiao />}
+            />
             <Route path="sobre" element={<Sobre />} />
           </Routes>
         </main>

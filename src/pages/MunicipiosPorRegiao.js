@@ -1,26 +1,20 @@
 import React from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { AUTH_TOKEN_VALIDADE, GET_REGIOES } from "../ApiService";
+import {
+  AUTH_TOKEN_VALIDADE,
+  GET_MUNICIPIOS_POR_REGIOES,
+  GET_REGIOES,
+} from "../ApiService";
 import CirculoAtivo from "../components/CirculoAtivo";
 import Loading from "../Loading";
 
-const Regiao = () => {
+const MunicipiosPorRegiao = () => {
   const [listRegioes, setListRegioes] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const navigate = useNavigate(); // retorna uma função para navegar pelas rotas nomeadas em app
+  const params = useParams();
 
-  /**
-   * Hook Effect - Lida com Efeitos colateres
-   *
-   * Para React, tudo que fugir o fluxo de renderização normal (request, fetch, animações),
-   * é considerado um efeito colateral.
-   * O que significa que pode geral loop infinito na aplicação.
-   * Fazendo ela renderizar pra sempre.
-   * SEMPRE QUE MUDAMOS UM ESTADO, A APLICAÇÃO FAZ RELOAD NA RENDERIZAÇÃO DAS FUNÇÕES DE UM COMPONENTE REACT. NAO QUEREMOS ISSO AQU!
-   * -
-   * O Hook useEffect ser para nesse momento para dizer, só realize a chamada uma vez da função AUTH_TOKEN_VALIDADE
-   */
   React.useEffect(() => {
     console.log("effect Regiao ...");
     /**
@@ -36,7 +30,10 @@ const Regiao = () => {
           navigate("/login"); // envio o usuario para página de login
         }
       } else {
-        const { response, json } = await GET_REGIOES(token);
+        const { response, json } = await GET_MUNICIPIOS_POR_REGIOES(
+          token,
+          params.regiao_id
+        );
         setListRegioes(json);
       }
       setLoading(false);
@@ -46,13 +43,13 @@ const Regiao = () => {
      * Chamando validacao do token
      */
     validarToken();
-  }, [navigate]);
+  }, [navigate, params]);
 
   if (loading) return <Loading active={loading} />; // Nosso loading component interagindo com o estado loading da Pagina de Login
 
   return (
     <div className="container">
-      <h3>Regiões</h3>
+      <h3>Municipios da Região: {params.regiao_nome} </h3>
       <table className="table">
         <thead>
           <tr>
@@ -70,9 +67,7 @@ const Regiao = () => {
               <tr key={regiaoObject.id}>
                 <th scope="row">{regiaoObject.id}</th>
                 <td>
-                  <Link
-                    to={`/municipiosPorRegiao/${regiaoObject.id}/${regiaoObject.nome}`}
-                  >
+                  <Link to={"municipiosPorRegiao/" + regiaoObject.id}>
                     {regiaoObject.nome}
                   </Link>
                 </td>
@@ -89,4 +84,4 @@ const Regiao = () => {
   );
 };
 
-export default Regiao;
+export default MunicipiosPorRegiao;
