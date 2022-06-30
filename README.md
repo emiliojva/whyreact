@@ -1,3 +1,109 @@
+# Why React ?
+
+Passo a Passo da Construçao do App.
+
+<hr>
+
+v1.0.0 - Instalar o React 
+  
+```cli
+npm install -g create-react-app
+create-react-app why-react
+```
+
+Executar 
+
+```cli
+cd why-react
+npm start
+```
+
+<hr>
+
+v1.0.1 - Limpar a instalaçao inicial 
+
+   - Apagar CSS e arquivos de Testes.Desnecessários inicialmente.
+   - Demonstrar criaçao de um Component Input, envolvido por um Component Header e Cabeçalho. No Component App.js
+
+<hr>
+
+v1.0.2 - Demonstrar uso de libs externas. Instalaçao e uso do Bootstrap com Component Input.  <br>
+   Instalando:
+   ```cli
+    npm install bootstrap
+    ```
+    <br>
+
+   Usando:
+   ```
+    /* Libs externas */
+    import "bootstrap/dist/js/bootstrap.bundle.min.js";
+    import "bootstrap/dist/css/bootstrap.min.css";
+    ```
+
+<hr>
+
+v1.0.3 Introdindo Reatividade com Hook useState, para email e password. - v1.0.3
+  ```useState``` 
+  <hr>
+
+v1.0.4 Efetuando Login com api externa. Refatorando ES6. Uso de API Fetch para consumo de dados, ES6 function async, try/catch, style Object, Component Loading, e capturando jwt com autenticacao. Interagindo com estados e eventos. Uso de Props - v1.0.4
+
+<hr>
+
+v1.0.5 Uso de React Routes, Header e footer estaticos, criacao de paginas de  login e listagem de regioes. Criacao de um service para consumir login da api. Usando table bootstrap em regioes 
+
+  ##### Instalar React Router
+
+  ```cli
+  npm install history react-router-dom@6.0.0-beta.0
+  ```
+
+  ##### Usar no app
+
+  ```jsx
+  import { BrowserRouter, Routes, Route } from 'react-router-dom';
+  import Contato from './Contato';
+  import Sobre from './Sobre';
+  import Home from './Home';
+
+  const App = () => {
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="sobre" element={<Sobre />} />
+          <Route path="contato" element={<Contato />} />
+          <Route path="*" element={<Pagina404 />} />				
+        </Routes>
+      </BrowserRouter>
+    );
+  };
+ ```
+
+<hr>
+
+v1.0.6 - Usando nova funcao da api para checar validade do token em Home e Regiao 
+
+<hr>
+   
+v1.0.7 -  Listando Regioes e antes validando token.
+
+<hr>
+
+v1.0.8 -  Listando municipios por Regiao - 
+
+<hr>
+
+
+
+
+---
+---
+---
+
+
+# README ORIGINAL DA EQUIPE React
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
